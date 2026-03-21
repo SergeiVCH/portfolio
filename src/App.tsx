@@ -23,6 +23,7 @@ import {
 import React, {useRef, useState, type ChangeEvent} from 'react'
 import {ProjectCard} from './components/ProjectCard/ProjectCard'
 import {developerProfile, projects, techStack} from './data/data'
+import {textFieldStyle, whatsappButtonStyle} from './components/textFieldStyle'
 
 // 1. ТЕМА
 const darkTheme = createTheme({
@@ -416,7 +417,7 @@ export const App = () => {
             </Typography>
             <Grid container spacing={4}>
               {projects.map((p, i) => (
-                <Grid size={{xs: 12, sm: 6}} key={i}>
+                <Grid size={{xs: 12, sm: 6}} key={i} sx={{ display: 'flex' }}>
                   <ProjectCard {...p} />
                 </Grid>
               ))}
@@ -505,14 +506,7 @@ export const App = () => {
                             : ''
                         }
                         sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
+                          textFieldStyle,
                         }}
                       />
                     </Grid>
@@ -526,14 +520,7 @@ export const App = () => {
                         onChange={handleChange}
                         variant='outlined'
                         sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
+                          textFieldStyle,
                         }}
                       />
                     </Grid>
@@ -550,15 +537,7 @@ export const App = () => {
                         variant='outlined'
                         placeholder='Расскажите немного о вашем проекте...'
                         sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                              boxShadow: '0 0 10px rgba(56, 189, 248, 0.2)',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
+                          textFieldStyle,
                         }}
                       />
                     </Grid>
@@ -598,23 +577,7 @@ export const App = () => {
                         // ДОБАВЛЕН СБРОС ФОРМЫ
                         onClick={handleFormReset}
                         sx={{
-                          width: {xs: '100%', md: 'auto'},
-                          borderRadius: '12px',
-                          px: 6,
-                          py: 2,
-                          fontSize: '1.1rem',
-                          fontWeight: 'bold',
-                          color: '#25D366',
-                          borderColor: 'rgba(37, 211, 102, 0.4)',
-                          '&.Mui-disabled': {
-                            borderColor: 'rgba(255, 255, 255, 0.12)',
-                            color: 'rgba(255, 255, 255, 0.3)',
-                          },
-                          '&:hover': {
-                            borderColor: '#25D366',
-                            backgroundColor: 'rgba(37, 211, 102, 0.1)',
-                            boxShadow: '0 0 20px rgba(37, 211, 102, 0.4)',
-                          },
+                          whatsappButtonStyle,
                         }}>
                         Отправить сообщение в WhatsApp
                       </Button>

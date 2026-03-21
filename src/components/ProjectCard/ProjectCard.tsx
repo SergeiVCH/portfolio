@@ -58,6 +58,8 @@ export const ProjectCard = ({
           alt={`Скриншот проекта ${title}`}
           sx={{
             height: '100%',
+            width: '100%', // Добавлено
+            objectFit: 'cover', // Гарантирует, что фото заполнит 200px без искажений
             transition: 'transform 0.3s ease-in-out',
           }}
           loading='lazy'
