@@ -20,10 +20,9 @@ import {
   useTransform,
   type HTMLMotionProps,
 } from 'framer-motion'
-import React, {useRef, useState, type ChangeEvent} from 'react'
+import React, {useRef, type ChangeEvent} from 'react'
 import {ProjectCard} from './components/ProjectCard/ProjectCard'
 import {developerProfile, projects, techStack} from './data/data'
-import {textFieldStyle, whatsappButtonStyle} from './components/textFieldStyle'
 
 // 1. ТЕМА
 const darkTheme = createTheme({
@@ -59,12 +58,36 @@ const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(
 )
 
 export const App = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     name: '',
     phone: '',
     email: '',
     message: '',
   })
+
+  // Обработчик изменений для текстовых полей
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | {name?: string; value: unknown}>,
+  ) => {
+    const {name, value} = e.target
+    setFormData((prev) => ({...prev, [name as string]: value}))
+  }
+
+  // Функция формирования ссылки для WhatsApp
+  const getWhatsAppLink = () => {
+    // Если базовые данные не заполнены, возвращаем пустую строку или заглушку
+    if (!formData.name || !formData.phone) return '#'
+
+    const phone = '77472037826'
+    const text =
+      `Здравствуйте!%0A%0A` +
+      `*Имя:* ${formData.name}%0A` +
+      `*Телефон:* ${formData.phone}%0A` +
+      `*Email:* ${formData.email || 'не указан'}%0A` +
+      `*Сообщение:* ${formData.message}`
+
+    return `https://wa.me/${phone}?text=${text}`
+  }
 
   const homeRef = useRef<HTMLDivElement>(null)
   const aboutRef = useRef<HTMLDivElement>(null)
@@ -106,37 +129,24 @@ export const App = () => {
     },
   })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | {name?: string; value: unknown}>,
+  ) => {
     const {name, value} = e.target
     let finalValue = value
 
+    // Логика маски для телефона
     if (name === 'phone') {
+      // Оставляем только цифры
       const onlyNums = String(value).replace(/[^0-9]/g, '')
+
+      // Ограничиваем длину (например, 11 цифр для 7XXXXXXXXXX)
       finalValue = onlyNums.slice(0, 11)
+      // Если пользователь стер всё, не даем полю быть пустым, если хочешь сразу +7
+      // Но лучше оставить просто цифры, а в WhatsApp ссылке мы их склеим
     }
 
-    setFormData((prev) => ({...prev, [name]: finalValue}))
-  }
-
-  const handleFormReset = () => {
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      message: '',
-    })
-  }
-
-  const getWhatsAppLink = () => {
-    const phone = '77472037826'
-    const text =
-      `Здравствуйте!%0A%0A` +
-      `*Имя:* ${formData.name}%0A` +
-      `*Телефон:* ${formData.phone}%0A` +
-      `*Email:* ${formData.email || 'не указан'}%0A` +
-      `*Сообщение:* ${formData.message}`
-
-    return `https://wa.me/${phone}?text=${text}`
+    setFormData((prev) => ({...prev, [name as string]: finalValue}))
   }
 
   return (
@@ -417,14 +427,14 @@ export const App = () => {
             </Typography>
             <Grid container spacing={4}>
               {projects.map((p, i) => (
-                <Grid size={{xs: 12, sm: 6}} key={i} sx={{ display: 'flex' }}>
+                <Grid size={{xs: 12, sm: 6}} key={i} sx={{display: 'flex'}}>
                   <ProjectCard {...p} />
                 </Grid>
               ))}
             </Grid>
           </AnimatedSection>
 
-          {/* CONTACT */}
+          {/* CONTACT SECTION */}
           <AnimatedSection
             ref={contactRef}
             sx={{
@@ -494,19 +504,15 @@ export const App = () => {
                         onChange={handleChange}
                         type='tel'
                         variant='outlined'
-                        placeholder='77XXXXXXXXX'
-                        error={
-                          formData.phone.length > 0 &&
-                          formData.phone.length < 11
-                        }
-                        helperText={
-                          formData.phone.length > 0 &&
-                          formData.phone.length < 11
-                            ? 'Введите 11 цифр'
-                            : ''
-                        }
                         sx={{
-                          textFieldStyle,
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: '12px',
+                            '&:hover fieldset': {borderColor: 'primary.main'},
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'primary.main',
+                            },
+                          },
+                          '& label.Mui-focused': {color: 'primary.main'},
                         }}
                       />
                     </Grid>
@@ -520,11 +526,19 @@ export const App = () => {
                         onChange={handleChange}
                         variant='outlined'
                         sx={{
-                          textFieldStyle,
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: '12px',
+                            '&:hover fieldset': {borderColor: 'primary.main'},
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'primary.main',
+                            },
+                          },
+                          '& label.Mui-focused': {color: 'primary.main'},
                         }}
                       />
                     </Grid>
 
+                    {/* НОВОЕ ПОЛЕ: СООБЩЕНИЕ ОТ РУКИ */}
                     <Grid size={{xs: 12}}>
                       <TextField
                         fullWidth
@@ -532,12 +546,20 @@ export const App = () => {
                         name='message'
                         value={formData.message}
                         onChange={handleChange}
-                        multiline
-                        rows={4}
+                        multiline // Делает поле многострочным
+                        rows={4} // Высота в 4 строки
                         variant='outlined'
                         placeholder='Расскажите немного о вашем проекте...'
                         sx={{
-                          textFieldStyle,
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: '12px',
+                            '&:hover fieldset': {borderColor: 'primary.main'},
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'primary.main',
+                              boxShadow: '0 0 10px rgba(56, 189, 248, 0.2)',
+                            },
+                          },
+                          '& label.Mui-focused': {color: 'primary.main'},
                         }}
                       />
                     </Grid>
@@ -552,7 +574,7 @@ export const App = () => {
                         whileHover={
                           !(
                             !formData.name ||
-                            formData.phone.length < 11 ||
+                            !formData.phone ||
                             !formData.message
                           )
                             ? {y: -5}
@@ -561,12 +583,13 @@ export const App = () => {
                         whileTap={
                           !(
                             !formData.name ||
-                            formData.phone.length < 11 ||
+                            !formData.phone ||
                             !formData.message
                           )
                             ? {scale: 0.95}
                             : {}
                         }
+                        // Кнопка отключена, если обязательные поля пустые
                         disabled={
                           !formData.name ||
                           formData.phone.length < 11 ||
@@ -574,10 +597,27 @@ export const App = () => {
                         }
                         href={getWhatsAppLink()}
                         target='_blank'
-                        // ДОБАВЛЕН СБРОС ФОРМЫ
-                        onClick={handleFormReset}
                         sx={{
-                          whatsappButtonStyle,
+                          width: {xs: '100%', md: 'auto'},
+                          borderRadius: '12px',
+                          px: 6,
+                          py: 2,
+                          fontSize: '1.1rem',
+                          fontWeight: 'bold',
+                          color: '#25D366',
+                          borderColor: 'rgba(37, 211, 102, 0.4)',
+
+                          // Стили для отключенного состояния
+                          '&.Mui-disabled': {
+                            borderColor: 'rgba(255, 255, 255, 0.12)',
+                            color: 'rgba(255, 255, 255, 0.3)',
+                          },
+
+                          '&:hover': {
+                            borderColor: '#25D366',
+                            backgroundColor: 'rgba(37, 211, 102, 0.1)',
+                            boxShadow: '0 0 20px rgba(37, 211, 102, 0.4)',
+                          },
                         }}>
                         Отправить сообщение в WhatsApp
                       </Button>
