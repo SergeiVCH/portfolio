@@ -66,12 +66,12 @@ export const App = () => {
   })
 
   // Обработчик изменений для текстовых полей
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | {name?: string; value: unknown}>,
-  ) => {
-    const {name, value} = e.target
-    setFormData((prev) => ({...prev, [name as string]: value}))
-  }
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | {name?: string; value: unknown}>,
+  // ) => {
+  //   const {name, value} = e.target
+  //   setFormData((prev) => ({...prev, [name as string]: value}))
+  // }
 
   // Функция формирования ссылки для WhatsApp
   const getWhatsAppLink = () => {
