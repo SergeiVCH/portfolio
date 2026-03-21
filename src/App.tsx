@@ -20,9 +20,9 @@ import {
   useTransform,
   type HTMLMotionProps,
 } from 'framer-motion'
-import React, {useRef, type ChangeEvent} from 'react'
-import {ProjectCard} from './components/ProjectCard/ProjectCard'
-import {developerProfile, projects, techStack} from './data/data'
+import React, { useRef } from 'react'
+import { ProjectCard } from './components/ProjectCard/ProjectCard'
+import { developerProfile, projects, techStack } from './data/data'
 
 // 1. ТЕМА
 const darkTheme = createTheme({
