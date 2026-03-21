@@ -48,7 +48,7 @@ const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(
       component={motion.div}
       initial={{opacity: 0, y: 30}}
       whileInView={{opacity: 1, y: 0}}
-      viewport={{once: true, amount: 0.2}}
+      viewport={{once: true, amount: 0.1}}
       transition={{duration: 0.7, ease: 'easeOut'}}
       sx={{...sx}}
       {...props}>
@@ -71,10 +71,10 @@ export const App = () => {
   const projectsRef = useRef<HTMLDivElement>(null)
   const contactRef = useRef<HTMLDivElement>(null)
 
-  const isAboutActive = useInView(aboutRef, {amount: 0.7})
-  const isTechActive = useInView(techRef, {amount: 0.7})
-  const isProjectsActive = useInView(projectsRef, {amount: 0.5})
-  const isContactActive = useInView(contactRef, {amount: 0.5})
+  const isAboutActive = useInView(aboutRef, {amount: 0.5})
+  const isTechActive = useInView(techRef, {amount: 0.5})
+  const isProjectsActive = useInView(projectsRef, {amount: 0.3})
+  const isContactActive = useInView(contactRef, {amount: 0.3})
   const isHomeActive = useInView(homeRef, {amount: 0.5})
 
   const {scrollY, scrollYProgress} = useScroll()
@@ -95,7 +95,8 @@ export const App = () => {
     transition: 'all 0.4s ease',
     fontWeight: isActive ? 700 : 400,
     borderRadius: '8px',
-    px: 2,
+    px: {xs: 1.5, md: 2},
+    minWidth: 'fit-content',
     boxShadow: isActive ? '0 0 15px rgba(56, 189, 248, 0.3)' : 'none',
     '&:hover': {
       borderColor: '#38bdf8',
@@ -118,12 +119,7 @@ export const App = () => {
   }
 
   const handleFormReset = () => {
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      message: '',
-    })
+    setFormData({name: '', phone: '', email: '', message: ''})
   }
 
   const getWhatsAppLink = () => {
@@ -178,7 +174,16 @@ export const App = () => {
               Начало
             </Button>
 
-            <Stack direction='row' spacing={1}>
+            <Stack 
+              direction='row' 
+              spacing={1} 
+              sx={{ 
+                overflowX: {xs: 'auto', md: 'visible'}, 
+                maxWidth: {xs: '70%', md: 'auto'},
+                pb: {xs: 0.5, md: 0},
+                '&::-webkit-scrollbar': { display: 'none' } 
+              }}
+            >
               <Button
                 onClick={() => scrollToSection(aboutRef)}
                 variant='outlined'
@@ -219,11 +224,11 @@ export const App = () => {
               alignItems: 'center',
               justifyContent: 'center',
               textAlign: {xs: 'center', md: 'left'},
-              py: {xs: 5, md: 0},
+              py: {xs: 4, md: 0},
             }}>
             <Grid
               container
-              spacing={6}
+              spacing={{xs: 4, md: 6}}
               alignItems='center'
               justifyContent='center'>
               <Grid size={{xs: 12, md: 7}} order={{xs: 2, md: 1}}>
@@ -231,7 +236,7 @@ export const App = () => {
                   variant='h1'
                   sx={{
                     fontWeight: 900,
-                    fontSize: {xs: '3rem', sm: '4rem', md: '5rem'},
+                    fontSize: {xs: '2.5rem', sm: '3.5rem', md: '5rem'},
                     lineHeight: 1.1,
                     mb: 2,
                   }}>
@@ -247,10 +252,10 @@ export const App = () => {
                   variant='h4'
                   color='text.secondary'
                   sx={{
-                    mb: 6,
+                    mb: {xs: 4, md: 6},
                     maxWidth: {xs: '100%', md: '650px'},
                     mx: {xs: 'auto', md: 0},
-                    fontSize: {xs: '1.5rem', md: '2.125rem'},
+                    fontSize: {xs: '1.25rem', md: '2.125rem'},
                   }}>
                   {developerProfile.title}
                 </Typography>
@@ -270,9 +275,9 @@ export const App = () => {
                     whileTap={{scale: 0.95}}
                     sx={{
                       ...getBtnStyle(true),
-                      py: 2,
-                      px: 6,
-                      fontSize: '1.1rem',
+                      py: {xs: 1.5, md: 2},
+                      px: {xs: 4, md: 6},
+                      fontSize: {xs: '0.9rem', md: '1.1rem'},
                       fontWeight: 'bold',
                       textTransform: 'uppercase',
                       letterSpacing: '1px',
@@ -290,17 +295,16 @@ export const App = () => {
                   component={motion.div}
                   initial={{scale: 0.8, opacity: 0}}
                   animate={{scale: 1, opacity: 1}}
-                  transition={{duration: 1, delay: 0.5, ease: 'easeOut'}}
+                  transition={{duration: 1, delay: 0.3, ease: 'easeOut'}}
                   sx={{
-                    width: {xs: '280px', sm: '350px', md: '400px'},
-                    height: {xs: '350px', sm: '440px', md: '500px'},
+                    width: {xs: '240px', sm: '320px', md: '400px'},
+                    height: {xs: '300px', sm: '400px', md: '500px'},
                     position: 'relative',
                     borderRadius: '20px',
                     border: '2px solid rgba(56, 189, 248, 0.4)',
                     boxShadow: '0 0 25px 0 rgba(56, 189, 248, 0.5)',
                     background:
                       'linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(17, 24, 39, 0) 100%)',
-                    transition: 'all 0.4s ease',
                     '&:hover': {
                       borderColor: 'primary.main',
                       boxShadow: '0 0 40px 5px rgba(56, 189, 248, 0.7)',
@@ -317,9 +321,7 @@ export const App = () => {
                       borderRadius: '18px',
                       filter: 'grayscale(30%)',
                       transition: '0.4s',
-                      '&:hover': {
-                        filter: 'grayscale(0%)',
-                      },
+                      '&:hover': { filter: 'grayscale(0%)' },
                     }}
                   />
                 </Box>
@@ -331,20 +333,20 @@ export const App = () => {
           <AnimatedSection
             ref={aboutRef}
             sx={{
-              py: 20,
-              minHeight: '80vh', // Секция займет почти весь экран
+              py: {xs: 8, md: 20},
+              minHeight: {xs: 'auto', md: '80vh'},
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               scrollMarginTop: '70px',
             }}>
-            <Typography variant='h3' sx={{mb: 4, fontWeight: 700}}>
+            <Typography variant='h3' sx={{mb: 4, fontWeight: 700, fontSize: {xs: '2rem', md: '3rem'}}}>
               Немного о себе
             </Typography>
             <Typography
               variant='body1'
               sx={{
-                fontSize: '1.2rem',
+                fontSize: {xs: '1rem', md: '1.2rem'},
                 lineHeight: 1.8,
                 color: 'text.secondary',
                 maxWidth: '900px',
@@ -357,22 +359,20 @@ export const App = () => {
           <AnimatedSection
             ref={techRef}
             sx={{
-              py: 15,
+              py: {xs: 8, md: 15},
               scrollMarginTop: '70px',
-              borderColor: 'divider',
             }}>
-            <Typography variant='h3' sx={{mb: 6, fontWeight: 700}}>
+            <Typography variant='h3' sx={{mb: {xs: 4, md: 6}, fontWeight: 700, fontSize: {xs: '2rem', md: '3rem'}}}>
               Мой Стек
             </Typography>
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
               {techStack.map((cat, i) => (
-                <Grid size={{xs: 12, md: 4}} key={i}>
+                <Grid size={{xs: 12, sm: 6, md: 4}} key={i}>
                   <Box
                     sx={{
-                      p: 4,
+                      p: {xs: 3, md: 4},
                       bgcolor: 'background.paper',
                       borderRadius: '20px',
-                      borderColor: 'divider',
                       height: '100%',
                       transition: '0.3s',
                       '&:hover': {
@@ -383,7 +383,7 @@ export const App = () => {
                     }}>
                     <Typography
                       variant='h5'
-                      sx={{mb: 3, fontWeight: 700, color: 'primary.main'}}>
+                      sx={{mb: 2, fontWeight: 700, color: 'primary.main', fontSize: {xs: '1.2rem', md: '1.5rem'}}}>
                       {cat.category}
                     </Typography>
                     <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1}}>
@@ -392,7 +392,8 @@ export const App = () => {
                           key={t}
                           label={t}
                           variant='outlined'
-                          sx={{borderRadius: '8px'}}
+                          size="small"
+                          sx={{borderRadius: '8px', fontSize: {xs: '0.75rem', md: '0.875rem'}}}
                         />
                       ))}
                     </Box>
@@ -406,14 +407,13 @@ export const App = () => {
           <AnimatedSection
             ref={projectsRef}
             sx={{
-              py: 15,
+              py: {xs: 8, md: 15},
               scrollMarginTop: '70px',
-              borderColor: 'divider',
             }}>
-            <Typography variant='h3' sx={{mb: 6, fontWeight: 700}}>
+            <Typography variant='h3' sx={{mb: {xs: 4, md: 6}, fontWeight: 700, fontSize: {xs: '2rem', md: '3rem'}}}>
               Проекты
             </Typography>
-            <Grid container spacing={4}>
+            <Grid container spacing={{xs: 3, md: 4}}>
               {projects.map((p, i) => (
                 <Grid size={{xs: 12, sm: 6}} key={i}>
                   <ProjectCard {...p} />
@@ -426,20 +426,17 @@ export const App = () => {
           <AnimatedSection
             ref={contactRef}
             sx={{
-              py: 20,
+              py: {xs: 8, md: 20},
               textAlign: 'center',
-              minHeight: '100vh',
+              minHeight: {xs: 'auto', md: '100vh'},
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              borderTop: '1px solid',
-              borderColor: 'divider',
-              backgroundColor: '#030712',
             }}>
-            <Container maxWidth='md'>
+            <Container maxWidth='md' sx={{ px: {xs: 0, sm: 2} }}>
               <Box
                 sx={{
-                  p: {xs: 4, md: 6},
+                  p: {xs: 3, sm: 4, md: 6},
                   bgcolor: 'background.paper',
                   borderRadius: '24px',
                   border: '1px solid',
@@ -450,18 +447,18 @@ export const App = () => {
                   variant='h2'
                   gutterBottom
                   sx={{
-                    mb: 6,
+                    mb: {xs: 4, md: 6},
                     fontWeight: 800,
                     color: 'primary.main',
                     textTransform: 'uppercase',
                     letterSpacing: '2px',
-                    fontSize: {xs: '2rem', md: '3rem'},
+                    fontSize: {xs: '1.75rem', md: '3rem'},
                   }}>
                   Let's talk!
                 </Typography>
 
                 <form action='#' style={{textAlign: 'left'}}>
-                  <Grid container spacing={3}>
+                  <Grid container spacing={2}>
                     <Grid size={{xs: 12, md: 6}}>
                       <TextField
                         fullWidth
@@ -470,16 +467,7 @@ export const App = () => {
                         value={formData.name}
                         onChange={handleChange}
                         variant='outlined'
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
-                        }}
+                        sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
                       />
                     </Grid>
 
@@ -493,26 +481,9 @@ export const App = () => {
                         type='tel'
                         variant='outlined'
                         placeholder='77XXXXXXXXX'
-                        error={
-                          formData.phone.length > 0 &&
-                          formData.phone.length < 11
-                        }
-                        helperText={
-                          formData.phone.length > 0 &&
-                          formData.phone.length < 11
-                            ? 'Введите 11 цифр'
-                            : ''
-                        }
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
-                        }}
+                        error={formData.phone.length > 0 && formData.phone.length < 11}
+                        helperText={formData.phone.length > 0 && formData.phone.length < 11 ? 'Введите 11 цифр' : ''}
+                        sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
                       />
                     </Grid>
 
@@ -524,98 +495,49 @@ export const App = () => {
                         value={formData.email}
                         onChange={handleChange}
                         variant='outlined'
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
-                        }}
+                        sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
                       />
                     </Grid>
 
                     <Grid size={{xs: 12}}>
                       <TextField
                         fullWidth
-                        label='Ваше сообщение / Описание задачи'
+                        label='Сообщение'
                         name='message'
                         value={formData.message}
                         onChange={handleChange}
                         multiline
                         rows={4}
                         variant='outlined'
-                        placeholder='Расскажите немного о вашем проекте...'
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: '12px',
-                            '&:hover fieldset': {borderColor: 'primary.main'},
-                            '&.Mui-focused fieldset': {
-                              borderColor: 'primary.main',
-                              boxShadow: '0 0 10px rgba(56, 189, 248, 0.2)',
-                            },
-                          },
-                          '& label.Mui-focused': {color: 'primary.main'},
-                        }}
+                        placeholder='Расскажите о вашем проекте...'
+                        sx={{ '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}
                       />
                     </Grid>
 
-                    <Grid
-                      size={{xs: 12}}
-                      sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
+                    <Grid size={{xs: 12}} sx={{display: 'flex', justifyContent: 'center', mt: 2}}>
                       <Button
                         variant='outlined'
                         size='large'
                         component={motion.a}
-                        whileHover={
-                          !(
-                            !formData.name ||
-                            formData.phone.length < 11 ||
-                            !formData.message
-                          )
-                            ? {y: -5}
-                            : {}
-                        }
-                        whileTap={
-                          !(
-                            !formData.name ||
-                            formData.phone.length < 11 ||
-                            !formData.message
-                          )
-                            ? {scale: 0.95}
-                            : {}
-                        }
-                        disabled={
-                          !formData.name ||
-                          formData.phone.length < 11 ||
-                          !formData.message
-                        }
+                        whileTap={!(!formData.name || formData.phone.length < 11 || !formData.message) ? {scale: 0.95} : {}}
+                        disabled={!formData.name || formData.phone.length < 11 || !formData.message}
                         href={getWhatsAppLink()}
                         target='_blank'
-                        // ДОБАВЛЕН СБРОС ФОРМЫ
                         onClick={handleFormReset}
                         sx={{
-                          width: {xs: '100%', md: 'auto'},
+                          width: '100%',
                           borderRadius: '12px',
-                          px: 6,
                           py: 2,
-                          fontSize: '1.1rem',
+                          fontSize: {xs: '0.9rem', md: '1.1rem'},
                           fontWeight: 'bold',
                           color: '#25D366',
                           borderColor: 'rgba(37, 211, 102, 0.4)',
-                          '&.Mui-disabled': {
-                            borderColor: 'rgba(255, 255, 255, 0.12)',
-                            color: 'rgba(255, 255, 255, 0.3)',
-                          },
                           '&:hover': {
                             borderColor: '#25D366',
                             backgroundColor: 'rgba(37, 211, 102, 0.1)',
-                            boxShadow: '0 0 20px rgba(37, 211, 102, 0.4)',
                           },
                         }}>
-                        Отправить сообщение в WhatsApp
+                        Отправить в WhatsApp
                       </Button>
                     </Grid>
                   </Grid>
