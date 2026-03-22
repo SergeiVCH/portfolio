@@ -40,7 +40,7 @@ export const projects = [
     repoUrl: 'https://github.com/SergeiVCH/baby-store.git',
     image: 'https://i.ibb.co.com/JXC2rRc/Screenshot-2.jpg',
   },
- 
+
   // Добавь еще 1-2 проекта
 ]
 
@@ -51,21 +51,17 @@ export const techStack = [
       'React 19',
       'TypeScript',
       'JavaScript (ES6+)',
-      'Redux / Zustand',
+      'Redux Toolkit / Zustand',
       'MUI v6',
       'Tailwind CSS',
+      'Animations /Framer Motion',
       'HTML5 & CSS3',
+      'Feature-Sliced Design',
     ],
   },
   {
     category: 'Backend & DB',
-    technologies: [
-      'Node.js',
-      'Express.js',
-      'REST API',
-      'PostgreSQL',
-      'MongoDB',
-    ],
+    technologies: ['REST API', 'Axios', 'API Integration / REST API'],
   },
   {
     category: 'Tools & DevOps',
@@ -74,8 +70,8 @@ export const techStack = [
       'Vite',
       'Webpack',
       'Vercel / Netlify',
-      'Docker',
-      'Agile / Scrum',
+
+      'Storybook',
     ],
   },
 ]

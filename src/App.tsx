@@ -20,9 +20,9 @@ import {
   useTransform,
   type HTMLMotionProps,
 } from 'framer-motion'
-import React, { useRef } from 'react'
-import { ProjectCard } from './components/ProjectCard/ProjectCard'
-import { developerProfile, projects, techStack } from './data/data'
+import React, {useRef} from 'react'
+import {ProjectCard} from './components/ProjectCard/ProjectCard'
+import {developerProfile, projects, techStack} from './data/data'
 
 // 1. ТЕМА
 const darkTheme = createTheme({
@@ -231,6 +231,22 @@ export const App = () => {
               justifyContent: 'center',
               textAlign: {xs: 'center', md: 'left'},
               py: {xs: 5, md: 0},
+              position: 'relative', // КРИТИЧНО для ::after
+              '&::after': {
+                content: '""', // Пустая строка для создания элемента
+                position: 'absolute',
+                bottom: 0, // Прижимаем к низу секции
+                left: '50%', // Центрируем
+                transform: 'translateX(-50%)', // Центрируем
+                width: '80%', // Полоса будет не на весь экран
+                height: '1px', // Тонкая полоса
+                bgcolor: 'rgba(56, 189, 248, 0.2)', // Базовый цвет полосы
+                boxShadow: `
+        0 0 10px rgba(56, 189, 248, 0.4), // Основное свечение
+        0 0 20px rgba(56, 189, 248, 0.2), // Рассеянное свечение
+        0 0 30px rgba(56, 189, 248, 0.1)  // Фоновое свечение
+      `,
+              },
             }}>
             <Grid
               container
@@ -348,6 +364,22 @@ export const App = () => {
               flexDirection: 'column',
               justifyContent: 'center',
               scrollMarginTop: '70px',
+              position: 'relative', // КРИТИЧНО для ::after
+              '&::after': {
+                content: '""', // Пустая строка для создания элемента
+                position: 'absolute',
+                bottom: 0, // Прижимаем к низу секции
+                left: '50%', // Центрируем
+                transform: 'translateX(-50%)', // Центрируем
+                width: '80%', // Полоса будет не на весь экран
+                height: '1px', // Тонкая полоса
+                bgcolor: 'rgba(56, 189, 248, 0.2)', // Базовый цвет полосы
+                boxShadow: `
+        0 0 10px rgba(56, 189, 248, 0.4), // Основное свечение
+        0 0 20px rgba(56, 189, 248, 0.2), // Рассеянное свечение
+        0 0 30px rgba(56, 189, 248, 0.1)  // Фоновое свечение
+      `,
+              },
             }}>
             <Typography variant='h3' sx={{mb: 4, fontWeight: 700}}>
               Немного о себе
@@ -360,7 +392,33 @@ export const App = () => {
                 color: 'text.secondary',
                 maxWidth: '900px',
               }}>
-              {developerProfile.about}
+              <Typography
+                variant='body1'
+                sx={{color: 'grey.300', mb: 3, lineHeight: 1.8}}>
+                Мой бэкграунд в точных науках позволяет мне писать чистый,
+                предсказуемый код на TypeScript и строить логику приложений,
+                которая работает как часы.{' '}
+              </Typography>
+              <Typography
+                variant='body1'
+                sx={{color: 'grey.300', mb: 3, lineHeight: 1.8}}>
+                Я специализируюсь на React 19, используя мощь Zustand для
+                управления состоянием и MUI v6 для создания современных
+                UI-систем.
+              </Typography>
+              <Typography
+                variant='body1'
+                sx={{color: 'grey.300', mb: 3, lineHeight: 1.8}}>
+                От интерактивных 3D-фонов на Three.js до выверенных до пикселя
+                неоновых разделителей — я создаю продукты с эффектом погружения.
+              </Typography>
+              <Typography
+                variant='body1'
+                sx={{color: 'grey.300', mb: 3, lineHeight: 1.8}}>
+                Моя цель — превращать сложные идеи в работающие цифровые
+                продукты, которыми приятно пользоваться.
+              </Typography>
+              {/* {developerProfile.about} */}
             </Typography>
           </AnimatedSection>
 
@@ -371,6 +429,22 @@ export const App = () => {
               py: 15,
               scrollMarginTop: '70px',
               borderColor: 'divider',
+              position: 'relative', // КРИТИЧНО для ::after
+              '&::after': {
+                content: '""', // Пустая строка для создания элемента
+                position: 'absolute',
+                bottom: 0, // Прижимаем к низу секции
+                left: '50%', // Центрируем
+                transform: 'translateX(-50%)', // Центрируем
+                width: '80%', // Полоса будет не на весь экран
+                height: '1px', // Тонкая полоса
+                bgcolor: 'rgba(56, 189, 248, 0.2)', // Базовый цвет полосы
+                boxShadow: `
+        0 0 10px rgba(56, 189, 248, 0.4), // Основное свечение
+        0 0 20px rgba(56, 189, 248, 0.2), // Рассеянное свечение
+        0 0 30px rgba(56, 189, 248, 0.1)  // Фоновое свечение
+      `,
+              },
             }}>
             <Typography variant='h3' sx={{mb: 6, fontWeight: 700}}>
               Мой Стек
@@ -420,7 +494,7 @@ export const App = () => {
             sx={{
               py: 15,
               scrollMarginTop: '70px',
-              borderColor: 'divider',
+              // borderColor: 'divider',
             }}>
             <Typography variant='h3' sx={{mb: 6, fontWeight: 700}}>
               Проекты
