@@ -46,20 +46,31 @@ export const ProjectCard = ({
           boxShadow:
             '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(56, 189, 248, 0.2)',
           '& img': {
-            transform: 'scale(1.05)',
+            transform: 'scale(1.05)', // Небольшой зум при наведении
           },
         },
       }}>
-      {/* Контейнер для изображения */}
-      <Box sx={{overflow: 'hidden', height: 200, position: 'relative'}}>
+      {/* КОНТЕЙНЕР ДЛЯ ИЗОБРАЖЕНИЯ - ИСПРАВЛЕНО */}
+      <Box
+        sx={{
+          overflow: 'hidden',
+          height: 200, // Высота по-прежнему зафиксирована
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center', // Центрируем изображение горизонтально
+          alignItems: 'center', // Центрируем изображение вертикально
+          bgcolor: 'black', // Черный фон для пустых областей вокруг картинки
+        }}>
         <CardMedia
           component='img'
           image={image}
           alt={`Скриншот проекта ${title}`}
           sx={{
-            height: '100%',
-            width: '100%', // Добавлено
-            objectFit: 'cover', // Гарантирует, что фото заполнит 200px без искажений
+            maxHeight: '100%', // Картинка не будет выше 200px
+            maxWidth: '100%', // Картинка не будет шире карточки
+            objectFit: 'contain', // ИСПРАВЛЕНО: Вмещает картинку целиком без обрезки
+            width: 'auto', // Ширина подстроится под пропорции
+            height: 'auto', // Высота подстроится под пропорции
             transition: 'transform 0.3s ease-in-out',
           }}
           loading='lazy'
