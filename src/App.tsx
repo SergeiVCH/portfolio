@@ -23,6 +23,7 @@ import {
 import React, {useRef} from 'react'
 import {ProjectCard} from './components/ProjectCard/ProjectCard'
 import {developerProfile, projects, techStack} from './data/data'
+import {Helmet} from 'react-helmet-async'
 
 // 1. ТЕМА
 const darkTheme = createTheme({
@@ -152,7 +153,31 @@ export const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      {/* --- ВОТ СЮДА ВСТАВЛЯЕМ HELMET --- */}
+      <Helmet>
+        <title>Сергей | Frontend Developer | React Specialist</title>
+        <meta
+          name='description'
+          content='Портфолио Frontend-разработчика Сергея. Специализируюсь на React 19, TypeScript, Zustand и MUI v6. Создаю современные цифровые продукты.'
+        />
+        <meta
+          name='keywords'
+          content='Frontend, React, TypeScript, MUI, Сергей разработчик, Казахстан, портфолио'
+        />
 
+        {/* Open Graph для красивых ссылок в соцсетях */}
+        <meta property='og:title' content='Сергей | Frontend Developer' />
+        <meta
+          property='og:description'
+          content='Разработка современных интерфейсов на React и TypeScript.'
+        />
+        <meta
+          property='og:image'
+          content='https://i.ibb.co.com/tTCK8nGF/unnamed.jpg'
+        />
+        <meta property='og:type' content='website' />
+      </Helmet>
+      {/* ---------------------------------- */}
       <motion.div
         style={{
           scaleX: scrollYProgress,
@@ -419,6 +444,7 @@ export const App = () => {
                 продукты, которыми приятно пользоваться.
               </Typography>
               {/* {developerProfile.about} */}
+              //приходит из data информация о обо мне
             </Typography>
           </AnimatedSection>
 
