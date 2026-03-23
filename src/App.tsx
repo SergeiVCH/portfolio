@@ -444,7 +444,6 @@ export const App = () => {
                 продукты, которыми приятно пользоваться.
               </Typography>
               {/* {developerProfile.about} */}
-              //приходит из data информация о обо мне
             </Typography>
           </AnimatedSection>
 
