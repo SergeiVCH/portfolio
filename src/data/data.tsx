@@ -48,11 +48,12 @@ export const techStack = [
   {
     category: 'Frontend',
     technologies: [
-      'React 19',
+      'React',
       'TypeScript',
       'JavaScript (ES6+)',
       'Redux Toolkit / Zustand',
       'MUI v6',
+      'Responsive Web Design',
       'Tailwind CSS',
       'Animations /Framer Motion',
       'HTML5 & CSS3',
@@ -70,7 +71,6 @@ export const techStack = [
       'Vite',
       'Webpack',
       'Vercel / Netlify',
-
       'Storybook',
     ],
   },
