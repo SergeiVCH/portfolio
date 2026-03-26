@@ -427,7 +427,7 @@ export const App = () => {
               <Typography
                 variant='body1'
                 sx={{color: 'grey.300', mb: 3, lineHeight: 1.8}}>
-                Я специализируюсь на React 19, используя мощь Zustand для
+                Я специализируюсь на React, используя мощь Zustand для
                 управления состоянием и MUI v6 для создания современных
                 UI-систем.
               </Typography>

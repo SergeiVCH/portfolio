@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 
-interface ProjectProps {
+export type ProjectProps = {
   title: string
   description: string
   tech: string[]
