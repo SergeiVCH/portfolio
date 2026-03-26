@@ -1,5 +1,3 @@
-// src/data.ts
-
 export const developerProfile = {
   name: 'Сергей',
   title: 'Frontend Developer | React Specialist',
@@ -9,18 +7,6 @@ export const developerProfile = {
   github: 'https://github.com/yourusername',
   linkedin: 'https://linkedin.com/in/yourusername',
 }
-
-// export const skills = [
-//   'React 19',
-//   'TypeScript',
-//   'Next.js',
-//   'Zustand / Redux',
-//   'TanStack Query',
-//   'Tailwind CSS',
-//   'Framer Motion',
-//   'Git',
-//   'REST API',
-// ]
 
 export const projects = [
   {

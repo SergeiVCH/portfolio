@@ -25,6 +25,13 @@ import {ProjectCard} from './components/ProjectCard/ProjectCard'
 import {developerProfile, projects, techStack} from './data/data'
 import {Helmet} from 'react-helmet-async'
 
+import HomeIcon from '@mui/icons-material/Home'
+import PersonIcon from '@mui/icons-material/Person'
+import CodeIcon from '@mui/icons-material/Code'
+import TerminalIcon from '@mui/icons-material/Terminal'
+import MailIcon from '@mui/icons-material/Mail'
+import {IconButton} from '@mui/material' // Добавь IconButton в общий импорт @mui/material
+
 // 1. ТЕМА
 const darkTheme = createTheme({
   palette: {
@@ -65,14 +72,6 @@ export const App = () => {
     email: '',
     message: '',
   })
-
-  // Обработчик изменений для текстовых полей
-  // const handleInputChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | {name?: string; value: unknown}>,
-  // ) => {
-  //   const {name, value} = e.target
-  //   setFormData((prev) => ({...prev, [name as string]: value}))
-  // }
 
   // Функция формирования ссылки для WhatsApp
   const getWhatsAppLink = () => {
@@ -204,42 +203,85 @@ export const App = () => {
         }
         sx={{height: '70px', justifyContent: 'center'}}>
         <Container maxWidth='lg'>
-          <Toolbar sx={{justifyContent: 'space-between', px: '0 !important'}}>
-            <Button
-              onClick={() => scrollToSection(homeRef)}
-              component={motion.button}
-              whileTap={{scale: 0.95}}
-              variant='outlined'
-              sx={getBtnStyle(isHomeActive)}>
-              Начало
-            </Button>
-
-            <Stack direction='row' spacing={1}>
-              <Button
+          <Toolbar sx={{justifyContent: 'center', px: '0 !important'}}>
+            {/* --- МОБИЛЬНАЯ НАВИГАЦИЯ (Иконки) --- */}
+            <Stack
+              direction='row'
+              spacing={1}
+              sx={{
+                display: {xs: 'flex', md: 'none'},
+                justifyContent: 'center',
+              }}>
+              <IconButton
+                onClick={() => scrollToSection(homeRef)}
+                sx={getBtnStyle(isHomeActive)}>
+                <HomeIcon />
+              </IconButton>
+              <IconButton
                 onClick={() => scrollToSection(aboutRef)}
-                variant='outlined'
                 sx={getBtnStyle(isAboutActive && !isTechActive)}>
-                Обо мне
-              </Button>
-              <Button
+                <PersonIcon />
+              </IconButton>
+              <IconButton
                 onClick={() => scrollToSection(techRef)}
-                variant='outlined'
                 sx={getBtnStyle(isTechActive && !isProjectsActive)}>
-                Стек
-              </Button>
-              <Button
+                <TerminalIcon />
+              </IconButton>
+              <IconButton
                 onClick={() => scrollToSection(projectsRef)}
-                variant='outlined'
                 sx={getBtnStyle(isProjectsActive && !isContactActive)}>
-                Проекты
-              </Button>
-              <Button
+                <CodeIcon />
+              </IconButton>
+              <IconButton
                 onClick={() => scrollToSection(contactRef)}
-                variant='outlined'
                 sx={getBtnStyle(isContactActive)}>
-                Контакты
-              </Button>
+                <MailIcon />
+              </IconButton>
             </Stack>
+
+            {/* --- ДЕСКТОПНАЯ НАВИГАЦИЯ (Текст) --- */}
+            <Box
+              sx={{
+                display: {xs: 'none', md: 'flex'},
+                width: '100%',
+                justifyContent: 'space-between',
+              }}>
+              <Button
+                onClick={() => scrollToSection(homeRef)}
+                component={motion.button}
+                whileTap={{scale: 0.95}}
+                variant='outlined'
+                sx={getBtnStyle(isHomeActive)}>
+                Начало
+              </Button>
+
+              <Stack direction='row' spacing={1}>
+                <Button
+                  onClick={() => scrollToSection(aboutRef)}
+                  variant='outlined'
+                  sx={getBtnStyle(isAboutActive && !isTechActive)}>
+                  Обо мне
+                </Button>
+                <Button
+                  onClick={() => scrollToSection(techRef)}
+                  variant='outlined'
+                  sx={getBtnStyle(isTechActive && !isProjectsActive)}>
+                  Стек
+                </Button>
+                <Button
+                  onClick={() => scrollToSection(projectsRef)}
+                  variant='outlined'
+                  sx={getBtnStyle(isProjectsActive && !isContactActive)}>
+                  Проекты
+                </Button>
+                <Button
+                  onClick={() => scrollToSection(contactRef)}
+                  variant='outlined'
+                  sx={getBtnStyle(isContactActive)}>
+                  Контакты
+                </Button>
+              </Stack>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
@@ -522,7 +564,7 @@ export const App = () => {
               // borderColor: 'divider',
             }}>
             <Typography variant='h3' sx={{mb: 6, fontWeight: 700}}>
-              Проекты
+              Мои проекты
             </Typography>
             <Grid container spacing={4}>
               {projects.map((p, i) => (
@@ -568,7 +610,7 @@ export const App = () => {
                     letterSpacing: '2px',
                     fontSize: {xs: '2rem', md: '3rem'},
                   }}>
-                  Let's talk!
+                  Напишите мне
                 </Typography>
 
                 <form action='#' style={{textAlign: 'left'}}>
@@ -598,6 +640,7 @@ export const App = () => {
                       <TextField
                         fullWidth
                         label='Номер телефона'
+                        placeholder='+7 (___) ___-__-__'
                         name='phone'
                         value={formData.phone}
                         onChange={handleChange}
